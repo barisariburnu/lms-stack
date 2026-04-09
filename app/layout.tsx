@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
@@ -47,7 +48,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <TooltipProvider>{children}</TooltipProvider>
           <Toaster />
         </ThemeProvider>
       </body>

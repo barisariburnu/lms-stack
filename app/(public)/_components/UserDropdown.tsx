@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { authClient } from "@/lib/auth-client";
+import { useSignOut } from "@/hooks/use-sign-out";
 import {
   BookOpen,
   ChevronDownIcon,
@@ -8,7 +8,6 @@ import {
   LayoutDashboardIcon,
   LogOutIcon,
 } from "lucide-react";
-import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,20 +28,8 @@ interface UserDropdownProps {
 
 export function UserDropdown({ email, name, image }: UserDropdownProps) {
   const router = useRouter();
+  const handleSignOut = useSignOut();
 
-  async function signOut() {
-    await authClient.signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          router.push("/login");
-          toast.success("Signed out successfully");
-        },
-        onError: (error) => {
-          toast.error(error.error?.message || "Something went wrong");
-        },
-      },
-    });
-  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -85,7 +72,7 @@ export function UserDropdown({ email, name, image }: UserDropdownProps) {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/dashboard">
+            <Link href="/admin">
               <LayoutDashboardIcon
                 size={16}
                 className="opacity-60"
@@ -96,7 +83,7 @@ export function UserDropdown({ email, name, image }: UserDropdownProps) {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={signOut}>
+        <DropdownMenuItem onClick={handleSignOut}>
           <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
           <span>Sign Out</span>
         </DropdownMenuItem>
