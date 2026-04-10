@@ -52,8 +52,15 @@ export function Navbar() {
             {isPending ? null : data?.user ? (
               <UserDropdown
                 email={data.user.email}
-                name={data.user.name}
-                image={data.user.image || ""}
+                image={
+                  data?.user.image ??
+                  `https://avatar.vercel.sh/${data?.user.email}`
+                }
+                name={
+                  data?.user?.name && data.user.name.length > 0
+                    ? data.user.name
+                    : data.user.email.split("@")[0]
+                }
               />
             ) : (
               <>
