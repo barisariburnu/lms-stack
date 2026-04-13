@@ -25,7 +25,14 @@ export function RichTextEditor({ content }: { content: any }) {
       content.onChange(JSON.stringify(editor.getJSON()));
     },
 
-    content: content.value ? JSON.parse(content.value) : "",
+    content: (() => {
+      if (!content.value) return "";
+      try {
+        return JSON.parse(content.value);
+      } catch (e) {
+        return content.value;
+      }
+    })(),
   });
 
   return (

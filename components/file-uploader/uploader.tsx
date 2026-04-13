@@ -3,6 +3,7 @@
 import { useCallback, useEffect } from "react";
 import { useState } from "react";
 import { RenderError } from "next/dist/next-devtools/dev-overlay/container/runtime-error/render-error";
+import { useConstructUrl } from "@/hooks/use-construct-url";
 import { cn } from "@/lib/utils";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { toast } from "sonner";
@@ -33,6 +34,8 @@ interface UploaderProps {
 }
 
 export function Uploader({ value, onChange }: UploaderProps) {
+  const fileUrl = useConstructUrl(value || "");
+
   const [fileState, setFileState] = useState<UploaderStateProps>({
     id: null,
     file: null,
@@ -42,6 +45,7 @@ export function Uploader({ value, onChange }: UploaderProps) {
     isDeleting: false,
     fileType: "image",
     key: value,
+    objectUrl: fileUrl,
   });
 
   async function uploadFile(file: File) {

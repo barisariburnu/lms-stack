@@ -99,6 +99,7 @@ model Course {
   updatedAt        DateTime     @updatedAt
   user             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId           String
+  chapters         Chapter[]
 
   @@index([userId])
   @@map("course")
@@ -114,4 +115,34 @@ enum CourseStatus {
   Draft
   Published
   Archived
+}
+
+model Chapter {
+  id        String   @id @default(uuid())
+  title     String
+  position  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId  String
+  lessons   Lesson[]
+
+  @@index([courseId])
+  @@map("chapter")
+}
+
+model Lesson {
+  id           String   @id @default(uuid())
+  title        String
+  description  String?
+  thumbnailKey String?
+  videoKey     String?
+  position     Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  chapter      Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  chapterId    String
+
+  @@index([chapterId])
+  @@map("lesson")
 }
