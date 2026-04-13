@@ -17,6 +17,7 @@ export const env = createEnv({
   },
   client: {
     NEXT_PUBLIC_S3_BUCKET_NAME_IMAGES: z.string().min(1),
+    NEXT_PUBLIC_AWS_REGION: z.string().min(1),
   },
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
@@ -32,5 +33,7 @@ export const env = createEnv({
     AWS_REGION: process.env.AWS_REGION,
     NEXT_PUBLIC_S3_BUCKET_NAME_IMAGES:
       process.env.NEXT_PUBLIC_S3_BUCKET_NAME_IMAGES,
+    NEXT_PUBLIC_AWS_REGION:
+      process.env.NEXT_PUBLIC_AWS_REGION || process.env.AWS_REGION,
   },
 });

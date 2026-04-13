@@ -49,7 +49,10 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mt-8">
-            <Link className={buttonVariants({ size: "lg" })} href="/cources">
+            <Link
+              className={buttonVariants({ size: "lg" })}
+              href="/admin/courses"
+            >
               Explore Courses
             </Link>
             <Link
