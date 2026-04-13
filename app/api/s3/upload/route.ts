@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { requireAdmin } from "@/app/data/admin/require-admin";
 import { env } from "@/lib/env";
 import { s3Client } from "@/lib/s3-client";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
@@ -10,10 +11,12 @@ export const fileUploadSchema = z.object({
   fileName: z.string().min(1, "File name is required"),
   contentType: z.string().min(1, "Content type is required"),
   size: z.number().min(1, "File size is required"),
-  isImage: z.boolean().default(false),
+  isImage: z.boolean(),
 });
 
 export async function POST(req: Request) {
+  const session = await requireAdmin();
+
   try {
     const body = await req.json();
 
