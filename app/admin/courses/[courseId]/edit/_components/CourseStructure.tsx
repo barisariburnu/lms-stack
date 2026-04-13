@@ -32,13 +32,15 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { reorderChapters, reorderLessons } from "../actions";
+import { NewChapterModal } from "./NewChapterModal";
+import { NewLessonModal } from "./NewLessonModal";
 
 interface CourseStructureProps {
   course: AdminCourseSingularType;
@@ -295,7 +297,8 @@ export function CourseStructure({ course }: CourseStructureProps) {
     >
       <Card>
         <CardHeader className="flex flex-row items-center justify-between border-b border-border">
-          Chapters
+          <CardTitle>Chapters</CardTitle>
+          <NewChapterModal courseId={course.id} />
         </CardHeader>
         <CardContent className="space-y-8">
           <SortableContext items={items} strategy={verticalListSortingStrategy}>
@@ -381,10 +384,10 @@ export function CourseStructure({ course }: CourseStructureProps) {
                             ))}
                           </SortableContext>
                           <div className="p-2">
-                            <Button className="w-full" variant="outline">
-                              <Plus className="size-4 mr-2" />
-                              New Lesson
-                            </Button>
+                            <NewLessonModal
+                              courseId={course.id}
+                              chapterId={item.id}
+                            />
                           </div>
                         </div>
                       </CollapsibleContent>

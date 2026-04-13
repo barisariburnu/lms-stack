@@ -4,7 +4,14 @@ import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/app/data/admin/require-admin";
 import { prisma } from "@/lib/db";
 import { ApiResponse } from "@/lib/types";
-import { CourseSchemaType, courseSchema } from "@/lib/zod-schemas";
+import {
+  ChapterSchemaType,
+  CourseSchemaType,
+  LessonSchemaType,
+  chapterSchema,
+  courseSchema,
+  lessonSchema,
+} from "@/lib/zod-schemas";
 
 export async function EditCourse(
   data: CourseSchemaType,
@@ -125,6 +132,101 @@ export async function reorderChapters(
     return {
       status: "error",
       message: "Failed to reorder chapters",
+    };
+  }
+}
+
+export async function createChapter(
+  values: ChapterSchemaType,
+): Promise<ApiResponse> {
+  await requireAdmin();
+
+  try {
+    const result = chapterSchema.safeParse(values);
+
+    if (!result.success) {
+      return {
+        status: "error",
+        message: "Invalid data",
+      };
+    }
+
+    await prisma.$transaction(async (tx) => {
+      const maxPosition = await tx.chapter.findFirst({
+        where: { courseId: result.data.courseId },
+        orderBy: { position: "desc" },
+        select: { position: true },
+      });
+
+      await tx.chapter.create({
+        data: {
+          title: result.data.name,
+          courseId: result.data.courseId,
+          position: (maxPosition?.position ?? 0) + 1,
+        },
+      });
+
+      revalidatePath(`/admin/courses/${result.data.courseId}/edit`);
+    });
+
+    return {
+      status: "success",
+      message: "Chapter created successfully",
+    };
+  } catch {
+    return {
+      status: "error",
+      message: "Failed to create chapter",
+    };
+  }
+}
+
+export async function createLesson(
+  values: LessonSchemaType,
+): Promise<ApiResponse> {
+  await requireAdmin();
+
+  try {
+    const result = lessonSchema.safeParse(values);
+
+    if (!result.success) {
+      return {
+        status: "error",
+        message: "Invalid data",
+      };
+    }
+
+    await prisma.$transaction(async (tx) => {
+      const maxPosition = await tx.lesson.findFirst({
+        where: {
+          chapterId: result.data.chapterId,
+        },
+        orderBy: { position: "desc" },
+        select: { position: true },
+      });
+
+      await tx.lesson.create({
+        data: {
+          title: result.data.name,
+          description: result.data.description,
+          thumnailKey: result.data.thumnailKey,
+          videoKey: result.data.videoKey,
+          chapterId: result.data.chapterId,
+          position: (maxPosition?.position ?? 0) + 1,
+        },
+      });
+
+      revalidatePath(`/admin/courses/${result.data.courseId}/edit`);
+    });
+
+    return {
+      status: "success",
+      message: "Lesson created successfully",
+    };
+  } catch {
+    return {
+      status: "error",
+      message: "Failed to create lesson",
     };
   }
 }
