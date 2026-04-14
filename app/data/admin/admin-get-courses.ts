@@ -2,7 +2,7 @@ import { prisma } from "@/lib/db";
 import { requireAdmin } from "./require-admin";
 
 export async function adminGetCourses() {
-  // TODO: await requireAdmin();
+  await requireAdmin();
 
   const data = await prisma.course.findMany({
     select: {
