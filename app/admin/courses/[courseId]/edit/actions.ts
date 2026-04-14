@@ -209,7 +209,7 @@ export async function createLesson(
         data: {
           title: result.data.name,
           description: result.data.description,
-          thumnailKey: result.data.thumnailKey,
+          thumbnailKey: result.data.thumbnailKey,
           videoKey: result.data.videoKey,
           chapterId: result.data.chapterId,
           position: (maxPosition?.position ?? 0) + 1,
