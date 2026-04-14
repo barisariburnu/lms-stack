@@ -25,6 +25,7 @@ import { CSS } from "@dnd-kit/utilities";
 import {
   ChevronDown,
   ChevronRight,
+  Delete,
   FileText,
   GripHorizontal,
   Plus,
@@ -39,6 +40,8 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { reorderChapters, reorderLessons } from "../actions";
+import { DeleteChapter } from "./DeleteChapter";
+import { DeleteLesson } from "./DeleteLesson";
 import { NewChapterModal } from "./NewChapterModal";
 import { NewLessonModal } from "./NewLessonModal";
 
@@ -342,9 +345,11 @@ export function CourseStructure({ course }: CourseStructureProps) {
                             {item.title}
                           </p>
                         </div>
-                        <Button variant="outline" size="icon">
-                          <Trash2 className="size-4" />
-                        </Button>
+
+                        <DeleteChapter
+                          courseId={course.id}
+                          chapterId={item.id}
+                        />
                       </div>
                       <CollapsibleContent>
                         <div className="p-1">
@@ -375,9 +380,12 @@ export function CourseStructure({ course }: CourseStructureProps) {
                                         {lesson.title}
                                       </Link>
                                     </div>
-                                    <Button variant="outline" size="icon">
-                                      <Trash2 className="size-4" />
-                                    </Button>
+
+                                    <DeleteLesson
+                                      courseId={course.id}
+                                      chapterId={item.id}
+                                      lessonId={lesson.id}
+                                    />
                                   </div>
                                 )}
                               </SortableItem>
