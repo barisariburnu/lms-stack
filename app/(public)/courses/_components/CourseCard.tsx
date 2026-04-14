@@ -3,14 +3,14 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { PublicCourseType } from "@/app/data/public/get-courses";
+import { PublishedCourseType } from "@/app/data/public/get-courses";
 import { useConstructUrl } from "@/hooks/use-construct-url";
-import { ImageIcon, BarChartIcon } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { BarChartIcon, ImageIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface CourseCardProps {
-  data: PublicCourseType;
+  data: PublishedCourseType;
 }
 
 function formatCurrency(amount: number) {
@@ -43,20 +43,23 @@ export function CourseCard({ data }: CourseCardProps) {
         )}
         <div className="absolute top-2 right-2 flex gap-2">
           {data.category && (
-            <Badge variant="secondary" className="bg-background/80 backdrop-blur-sm">
+            <Badge
+              variant="secondary"
+              className="bg-background/80 backdrop-blur-sm"
+            >
               {data.category}
             </Badge>
           )}
         </div>
       </div>
-      <CardContent className="flex flex-col flex-grow p-4">
+      <CardContent className="flex flex-col grow p-4">
         <Link
           href={`/courses/${data.slug}`}
           className="font-semibold text-lg line-clamp-2 hover:text-primary transition-colors mb-2"
         >
           {data.title}
         </Link>
-        <p className="text-sm text-muted-foreground line-clamp-2 mb-4 flex-grow">
+        <p className="text-sm text-muted-foreground line-clamp-2 mb-4 grow">
           {data.smallDescription}
         </p>
 
@@ -71,14 +74,21 @@ export function CourseCard({ data }: CourseCardProps) {
           <div className="flex items-center gap-2">
             <div className="size-6 rounded-full bg-muted overflow-hidden relative">
               {data.user.image ? (
-                <Image src={data.user.image} alt={data.user.name ?? "Instructor"} fill className="object-cover" />
+                <Image
+                  src={data.user.image}
+                  alt={data.user.name ?? "Instructor"}
+                  fill
+                  className="object-cover"
+                />
               ) : (
                 <div className="w-full h-full bg-primary/10 flex items-center justify-center text-[10px] text-primary">
                   {data.user.name?.[0]?.toUpperCase() ?? "I"}
                 </div>
               )}
             </div>
-            <span className="text-sm font-medium">{data.user.name ?? "Instructor"}</span>
+            <span className="text-sm font-medium">
+              {data.user.name ?? "Instructor"}
+            </span>
           </div>
           <p className="font-bold text-lg text-primary">
             {formatCurrency(data.price)}
