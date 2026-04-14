@@ -4,6 +4,7 @@ import { useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { tryCatch } from "@/hooks/try-catch";
+import { useConfetti } from "@/hooks/use-confetti";
 import {
   CourseSchemaType,
   courseCategories,
@@ -48,6 +49,7 @@ import { CreateCourse } from "./actions";
 export default function Page() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const { triggerConfetti } = useConfetti();
 
   const form = useForm<CourseSchemaType>({
     resolver: zodResolver(courseSchema) as any,
@@ -73,6 +75,7 @@ export default function Page() {
       }
       if (result?.status === "success") {
         toast.success(result.message);
+        triggerConfetti();
         form.reset();
         router.push("/admin/courses");
       } else if (result?.status === "error") {
