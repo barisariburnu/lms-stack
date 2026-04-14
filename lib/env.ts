@@ -14,6 +14,7 @@ export const env = createEnv({
     AWS_ENDPOINT_URL_S3: z.url().min(1),
     AWS_ENDPOINT_URL_IAM: z.url().min(1),
     AWS_REGION: z.string().min(1),
+    STRIPE_SECRET_KEY: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_S3_BUCKET_NAME_IMAGES: z.string().min(1),
@@ -35,5 +36,6 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_S3_BUCKET_NAME_IMAGES,
     NEXT_PUBLIC_AWS_REGION:
       process.env.NEXT_PUBLIC_AWS_REGION || process.env.AWS_REGION,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
   },
 });

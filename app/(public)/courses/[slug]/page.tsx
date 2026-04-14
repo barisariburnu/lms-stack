@@ -1,5 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 import { getCourse } from "@/app/data/course/get-course";
+import { checkIfCourseBought } from "@/app/data/user/user-is-enrolled";
 import { env } from "@/lib/env";
 import {
   Book,
@@ -22,6 +24,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Separator } from "@/components/ui/separator";
+import { EnrollmentButton } from "./_components/EnrollmentButton";
 
 type Params = {
   params: {
@@ -32,6 +35,7 @@ type Params = {
 export default async function Page({ params }: Params) {
   const { slug } = params;
   const course = await getCourse(slug);
+  const isEnrolled = await checkIfCourseBought(course.id);
 
   return (
     <div className="grid grid-cols-1 gap-8 lg-grid-cols-3 mt-5">
@@ -256,7 +260,14 @@ export default async function Page({ params }: Params) {
                 </ul>
               </div>
 
-              <Button className="w-full">Enroll Now!</Button>
+              {isEnrolled ? (
+                <Link href={`/dashboard`} className="w-full">
+                  <Button className="w-full">Go to Course</Button>
+                </Link>
+              ) : (
+                <EnrollmentButton courseId={course.id} />
+              )}
+
               <p className="text-xs text-muted-foreground text-center mt-3">
                 30-Day Money-Back Guarantee
               </p>

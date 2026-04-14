@@ -24,10 +24,13 @@ model User {
   accounts      Account[]
   courses       Course[]
 
-  role       String?
-  banned     Boolean?  @default(false)
-  banReason  String?
-  banExpires DateTime?
+  stripeCustomerId String? @unique
+
+  role        String?
+  banned      Boolean?     @default(false)
+  banReason   String?
+  banExpires  DateTime?
+  enrollments Enrollment[]
 
   @@unique([email])
   @@map("user")
@@ -100,6 +103,7 @@ model Course {
   user             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId           String
   chapters         Chapter[]
+  enrollments      Enrollment[]
 
   @@index([userId])
   @@map("course")
@@ -145,4 +149,27 @@ model Lesson {
 
   @@index([chapterId])
   @@map("lesson")
+}
+
+model Enrollment {
+  id        String           @id @default(uuid())
+  amount    Int
+  status    EnrollmentStatus @default(Pending)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  course    Course           @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId  String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+
+  @@unique([courseId, userId])
+  @@index([courseId])
+  @@index([userId])
+  @@map("enrollment")
+}
+
+enum EnrollmentStatus {
+  Pending
+  Active
+  Refunded
 }
