@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
+import "server-only";
 
 export async function getCourse(slug: string) {
   const course = await prisma.course.findUnique({

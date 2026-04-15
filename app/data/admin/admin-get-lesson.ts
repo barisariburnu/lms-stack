@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
+import "server-only";
 import { requireAdmin } from "./require-admin";
 
 export async function adminGetLesson(lessonId: string) {

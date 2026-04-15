@@ -4,7 +4,7 @@ import "server-only";
 import { requireAdmin } from "./require-admin";
 
 export async function adminGetCourse(courseId: string) {
-  // await requireAdmin();
+  await requireAdmin();
 
   const course = await prisma.course.findUnique({
     where: {
