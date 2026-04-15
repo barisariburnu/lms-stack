@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { RenderDescription } from "@/components/rich-text-editor/render-description";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Collapsible,
@@ -261,7 +261,10 @@ export default async function Page({ params }: Params) {
               </div>
 
               {isEnrolled ? (
-                <Link href={`/dashboard`} className="w-full">
+                <Link
+                  href={`/dashboard`}
+                  className={buttonVariants({ className: "w-full" })}
+                >
                   <Button className="w-full">Go to Course</Button>
                 </Link>
               ) : (
