@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useSignOut } from "@/hooks/use-sign-out";
 import {
   BookOpen,
@@ -27,7 +26,6 @@ interface UserDropdownProps {
 }
 
 export function UserDropdown({ email, name, image }: UserDropdownProps) {
-  const router = useRouter();
   const handleSignOut = useSignOut();
 
   return (

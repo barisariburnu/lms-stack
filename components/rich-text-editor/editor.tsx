@@ -5,7 +5,11 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { MenuBar } from "./menubar";
 
-export function RichTextEditor({ content }: { content: any }) {
+export function RichTextEditor({
+  content,
+}: {
+  content: { value: string; onChange: (value: string) => void };
+}) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -29,7 +33,7 @@ export function RichTextEditor({ content }: { content: any }) {
       if (!content.value) return "";
       try {
         return JSON.parse(content.value);
-      } catch (e) {
+      } catch {
         return content.value;
       }
     })(),

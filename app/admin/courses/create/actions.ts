@@ -30,7 +30,7 @@ export async function CreateCourse(
       },
     });
 
-    const course = await prisma.course.create({
+    await prisma.course.create({
       data: {
         ...validation.data,
         userId: session.user.id as string,
@@ -39,7 +39,7 @@ export async function CreateCourse(
     });
 
     return { status: "success", message: "Course created successfully" };
-  } catch (error) {
+  } catch {
     return { status: "error", message: "Failed to create course" };
   }
 }

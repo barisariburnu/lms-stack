@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect } from "react";
 import Link from "next/link";
 import { useConfetti } from "@/hooks/use-confetti";
@@ -10,7 +12,7 @@ export default function Page() {
 
   useEffect(() => {
     triggerConfetti();
-  }, []);
+  }, [triggerConfetti]);
 
   return (
     <div className="w-full min-h-screen flex flex-1 items-center justify-center">

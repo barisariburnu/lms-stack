@@ -3,7 +3,7 @@ import { tryCatch } from "@/hooks/try-catch";
 import { ChapterSchemaType, chapterSchema } from "@/lib/zod-schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
-import { Form, useForm } from "react-hook-form";
+import { Form, useForm, Resolver } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,7 +30,7 @@ export function NewChapterModal({ courseId }: { courseId: string }) {
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<ChapterSchemaType>({
-    resolver: zodResolver(chapterSchema) as any,
+    resolver: zodResolver(chapterSchema) as unknown as Resolver<ChapterSchemaType>,
     defaultValues: {
       name: "",
       courseId: courseId,

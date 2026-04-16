@@ -25,11 +25,8 @@ import { CSS } from "@dnd-kit/utilities";
 import {
   ChevronDown,
   ChevronRight,
-  Delete,
   FileText,
   GripHorizontal,
-  Plus,
-  Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";

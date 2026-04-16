@@ -78,7 +78,7 @@ export default async function Page({ params }: Params) {
 
           <div className="space-y-6">
             <h2 className="text-3xl font-semibold tracking-tight">
-              What you'll learn
+              What you&apos;ll learn
             </h2>
 
             <RenderDescription json={JSON.parse(course.description)} />

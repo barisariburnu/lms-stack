@@ -3,7 +3,7 @@ import { tryCatch } from "@/hooks/try-catch";
 import { LessonSchemaType, lessonSchema } from "@/lib/zod-schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
-import { Form, useForm } from "react-hook-form";
+import { Form, useForm, Resolver } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -36,7 +36,7 @@ export function NewLessonModal({
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<LessonSchemaType>({
-    resolver: zodResolver(lessonSchema) as any,
+    resolver: zodResolver(lessonSchema) as unknown as Resolver<LessonSchemaType>,
     defaultValues: {
       name: "",
       courseId: courseId,

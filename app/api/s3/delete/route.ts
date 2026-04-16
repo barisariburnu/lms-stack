@@ -5,7 +5,7 @@ import { s3Client } from "@/lib/s3-client";
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 export async function DELETE(req: Request) {
-  const session = await requireAdmin();
+  await requireAdmin();
 
   try {
     const body = await req.json();
@@ -26,7 +26,7 @@ export async function DELETE(req: Request) {
     await s3Client.send(command);
 
     return NextResponse.json({ message: "Object deleted successfully" });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Missing or invalid object key" },
       { status: 500 },

@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import router from "next/router";
 import { useSignOut } from "@/hooks/use-sign-out";
 import { authClient } from "@/lib/auth-client";
 import {
@@ -11,7 +10,6 @@ import {
   LayoutDashboardIcon,
   LogOutIcon,
 } from "lucide-react";
-import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -53,7 +51,7 @@ export function NavUser() {
                     session?.user.image ??
                     `https://avatar.vercel.sh/${session?.user.email}`
                   }
-                  alt={session?.user.name!}
+                  alt={session?.user.name}
                 />
                 <AvatarFallback className="rounded-lg">
                   {session?.user.name && session.user.name.length > 0
@@ -88,7 +86,7 @@ export function NavUser() {
                       session?.user.image ??
                       `https://avatar.vercel.sh/${session?.user.email}`
                     }
-                    alt={session?.user.name!}
+                    alt={session?.user.name}
                   />
                   <AvatarFallback className="rounded-lg">
                     {session?.user.name && session.user.name.length > 0

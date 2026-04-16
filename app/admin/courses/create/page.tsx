@@ -14,7 +14,7 @@ import {
 } from "@/lib/zod-schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, Loader2, PlusIcon, SparkleIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { useForm, Resolver } from "react-hook-form";
 import slugify from "slugify";
 import { toast } from "sonner";
 import { Uploader } from "@/components/file-uploader/uploader";
@@ -52,7 +52,7 @@ export default function Page() {
   const { triggerConfetti } = useConfetti();
 
   const form = useForm<CourseSchemaType>({
-    resolver: zodResolver(courseSchema) as any,
+    resolver: zodResolver(courseSchema) as unknown as Resolver<CourseSchemaType>,
     defaultValues: {
       title: "",
       description: "",

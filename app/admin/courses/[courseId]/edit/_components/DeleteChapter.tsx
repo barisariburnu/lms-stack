@@ -2,7 +2,7 @@ import { useState, useTransition } from "react";
 import { tryCatch } from "@/hooks/try-catch";
 import { Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import { is } from "zod/v4/locales";
+
 import {
   AlertDialog,
   AlertDialogCancel,

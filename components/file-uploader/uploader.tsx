@@ -121,7 +121,7 @@ export function Uploader({ value, onChange, fileTypeAccepted }: UploaderProps) {
           xhr.setRequestHeader("Content-Type", file.type);
           xhr.send(file);
         });
-      } catch (error) {
+      } catch {
         toast.error("Failed to generate presigned URL");
         setFileState((prev) => ({
           ...prev,
@@ -157,7 +157,7 @@ export function Uploader({ value, onChange, fileTypeAccepted }: UploaderProps) {
         uploadFile(file);
       }
     },
-    [fileState.objectUrl],
+    [fileState.objectUrl, uploadFile],
   );
 
   async function handleRemoveFile() {
@@ -208,7 +208,7 @@ export function Uploader({ value, onChange, fileTypeAccepted }: UploaderProps) {
       }));
 
       toast.success("File deleted successfully");
-    } catch (error) {
+    } catch {
       toast.error("Failed to remove file. Please try again later.");
 
       setFileState((prev) => ({
