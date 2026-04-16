@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { description } from "@/components/sidebar/chart-area-interactive";
 
 export const courseLevels = ["Beginner", "Intermediate", "Advanced"] as const;
 export const courseStatuses = ["Draft", "Published", "Archived"] as const;

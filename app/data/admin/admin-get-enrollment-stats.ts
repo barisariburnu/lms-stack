@@ -28,7 +28,7 @@ export async function adminGetEnrollmentStats(): Promise<
     },
   });
 
-  let last30Days: { date: string; enrollments: number }[] = [];
+  const last30Days: { date: string; enrollments: number }[] = [];
 
   for (let index = 29; index >= 0; index--) {
     const date = new Date();
