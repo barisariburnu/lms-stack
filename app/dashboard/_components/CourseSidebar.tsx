@@ -1,3 +1,5 @@
+"use client";
+
 import { usePathname } from "next/navigation";
 import { CourseSidebarDataType } from "@/app/data/course/get-course-sidebar-data";
 import { useCourseProgress } from "@/hooks/use-course-progress";

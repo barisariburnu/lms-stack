@@ -8,6 +8,8 @@ import {
   AdminCourseCardSkeleton,
 } from "./_components/AdminCourseCard";
 
+export const dynamic = "force-dynamic";
+
 export default function Page() {
   return (
     <>

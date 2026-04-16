@@ -1,3 +1,5 @@
+"use client";
+
 import { useTransition } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";

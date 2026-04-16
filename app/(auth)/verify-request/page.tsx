@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTransition } from "react";
+import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { Loader2 } from "lucide-react";
@@ -20,7 +21,15 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 
-export default function VerifyRequestPage() {
+export default function VerifyRequestRoute() {
+  return (
+    <Suspense>
+      <VerifyRequestPage />
+    </Suspense>
+  );
+}
+
+function VerifyRequestPage() {
   const router = useRouter();
   const [otp, setOtp] = useState("");
   const [isEmailPending, startEmailTransition] = useTransition();

@@ -1,4 +1,3 @@
-"use client";
 
 import { adminGetDashboardStats } from "@/app/data/admin/admin-get-dashboard-stats";
 import { Book, PlayIcon, ShoppingCart, Users } from "lucide-react";
