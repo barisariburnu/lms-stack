@@ -26,11 +26,12 @@ model User {
 
   stripeCustomerId String? @unique
 
-  role        String?
-  banned      Boolean?     @default(false)
-  banReason   String?
-  banExpires  DateTime?
-  enrollments Enrollment[]
+  role             String?
+  banned           Boolean?         @default(false)
+  banReason        String?
+  banExpires       DateTime?
+  enrollments      Enrollment[]
+  lessonProgresses LessonProgress[]
 
   @@unique([email])
   @@map("user")
@@ -137,16 +138,17 @@ model Chapter {
 }
 
 model Lesson {
-  id           String   @id @default(uuid())
-  title        String
-  description  String?
-  thumbnailKey String?
-  videoKey     String?
-  position     Int
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  chapter      Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-  chapterId    String
+  id               String           @id @default(uuid())
+  title            String
+  description      String?
+  thumbnailKey     String?
+  videoKey         String?
+  position         Int
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  chapter          Chapter          @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  chapterId        String
+  lessonProgresses LessonProgress[]
 
   @@index([chapterId])
   @@map("lesson")
@@ -173,4 +175,20 @@ enum EnrollmentStatus {
   Pending
   Active
   Refunded
+}
+
+model LessonProgress {
+  id          String   @id @default(uuid())
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  lesson      Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  lessonId    String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+
+  @@unique([lessonId, userId])
+  @@index([lessonId])
+  @@index([userId])
+  @@map("lesson_progress")
 }

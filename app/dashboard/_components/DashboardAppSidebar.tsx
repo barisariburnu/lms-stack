@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import Logo from "@/public/logo.png";
 import {
-  BookOpen,
   CameraIcon,
   CircleHelpIcon,
   FileTextIcon,
@@ -30,13 +29,8 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "/admin",
+      url: "/dashboard",
       icon: LayoutDashboardIcon,
-    },
-    {
-      title: "Courses",
-      url: "/admin/courses",
-      icon: BookOpen,
     },
   ],
   navClouds: [
@@ -106,7 +100,9 @@ const data = {
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function DashboardAppSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
